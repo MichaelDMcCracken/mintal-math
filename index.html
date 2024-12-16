@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&family=Quicksand:wght@300..700&display=swap"
+        rel="stylesheet">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <title>Mintal Math</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<header>
+    <div class="header-content">
+        <div class="header-logo">
+            <img src="./img/logo.png">
+        </div>
+        <div class="nav-flex">
+            <a href="" class="nav-item">Practice</a>
+            <a href="" class="nav-item">About</a>
+            <a href="" class="nav-item">Contact</a>
+        </div>
+    </div>
+</header>
+<h1 id="current-study-mode">Practice Mode</h1>
+<div class="practice-page">
+    <div class="practice-problem">
+        <div class="practice-item" id="num1">10</div>
+        <div class="practice-item" id="operator">&div;</div>
+        <div class="practice-item" id="num2">5</div>
+        <div class="practice-item" id="equal">=</div>
+        <input id="answer" class="practice-item practice-input" placeholder="">
+    </div>
+</div>
+<div class="practice-container">
+    <div class="practice-settings">
+        <div class="practice-layout">
+            <h3>Layout</h3>
+            <div class="radio-btn">
+                <input type="radio" name="layout" value="hoz" checked>Horizontal
+            </div>
+            <div class="radio-btn">
+                <input type="radio" name="layout" value="ver" disabled>Vertical
+            </div>
+        </div>
+        <div class="practice-operation">
+            <h3>Operation Types</h3>
+            <div class="chk-btn">
+                <input type="checkbox" value="+" id="add" checked> Add
+            </div>
+            <div class="chk-btn">
+                <input type="checkbox" value="-" id="subtract"> Subtract
+            </div>
+            <div class="chk-btn">
+                <input type="checkbox" value="×" id="multiply"> Multiply
+            </div>
+            <div class="chk-btn">
+                <input type="checkbox" value="÷" id="divide"> Divide
+            </div>
+        </div>
+
+        <div class="practice-difficulty">
+            <h3>Difficulty Level</h3>
+            <div class="difficulty-range">
+                <div class="difficulty-label">
+                    Easy
+                </div>
+                <input type="range" min="1" max="5" step="1">
+                <div class="difficulty-label">
+                    Hard
+                </div>
+            </div>
+        </div>
+        <div class="practice-mode">
+            <h3>Study Mode</h3>
+            <select id="mode-selector">
+                <option value="learn">Learn Mode</option>
+                <option value="practice">Practice Mode</option>
+                <option value="quiz">Quiz Mode</option>
+            </select>
+        </div>
+
+    </div>
+</div>
+<div class="previous-container">
+    <div class="previous-label">
+        Previous Problems
+    </div>
+    <div class="previous-problems">
+    </div>
+</div>
+
+<footer>
+    
+</footer>
+
+<script src="script.js"></script>
+</body>
+
+</html>

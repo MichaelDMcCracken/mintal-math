@@ -1,0 +1,241 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+i {
+    vertical-align: middle;
+}
+
+h1 {
+    margin: 1rem;
+    text-align: center;
+}
+
+body {
+    background-color: #fbfbfb;
+}
+
+.header-content {
+    max-width: 100%;
+    background-color: #15e098;
+    padding: 1rem;
+    box-shadow: #15e098 0px -10px 25px 0px;
+    color: #fafafa;
+}
+
+.header-logo {
+    display: inline;
+}
+
+.header-logo img {
+    display: inline;
+    height: 55px;
+    background-size: contain;
+}
+
+.nav-flex {
+    display: inline-flex;
+    float: right;
+    height: 55px;
+    margin-right: 2rem;
+    align-items: center;
+}
+
+.nav-item {
+    margin: 0 1rem;
+    padding: 0.5rem 0;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #fafafa;
+    /* border-bottom: #fafafa 1px solid; */
+    letter-spacing: 0.5px;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.nav-item:hover {
+    color: #4eb3ac;
+    /* border-bottom: #4eb3ac 1px solid; */
+    transition: 500ms;
+}
+
+.practice-page {
+    margin: 2rem 0 5rem 0;
+}
+
+.practice-problem {
+    display: grid;
+    margin: 0 10%;
+    gap: 1rem;
+    grid-template-columns: 2fr 1fr 2fr 1fr 4fr;
+    justify-items: center;
+}
+
+.practice-item {
+    color: #02160F;
+    font-size: 10rem;
+    font-weight: 700;
+}
+
+/* Transition for input box background change */
+.practice-input {
+    width: 100%;
+    text-align: center;
+    background: none;
+    border: none;
+    border-bottom: #10B379 1px solid;
+    outline: none;
+    transition: background-color 0.3s ease;
+    /* Smooth transition for color change */
+}
+
+/* Correct answer - matching the previous problem correct bubble color */
+.practice-input.correct-answer {
+    background-color: #15e098;
+    animation: pulseCorrect 0.5s ease;
+    /* Green (same as the correct bubble color) */
+}
+
+/* Incorrect answer - matching the previous problem wrong bubble color */
+.practice-input.incorrect-answer {
+    background-color: #ff5f56;
+    animation: shake 0.5s ease;
+    /* Red (same as the wrong bubble color) */
+}
+
+.previous-container {
+    width: 90%;
+    margin: 0 auto;
+    display: grid;
+    /* font-size: 1.2rem; */
+    gap: 1rem;
+    grid-template-columns: 220px 12fr;
+    border-top: #c2d3e0 1px solid;
+    border-bottom: #c2d3e0 1px solid;
+    padding: 1rem;
+}
+
+.previous-label {
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 0.5rem;
+}
+
+.previous-problems {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.prev-problem {
+    letter-spacing: 2px;
+    border-radius: 500px;
+    padding: 2px 15px;
+}
+
+.correct {
+    background-color: #15e098;
+}
+
+.wrong {
+    background-color: #ff5f56;
+}
+
+.practice-container {
+    width: 90%;
+    margin: 0 auto 2rem auto;
+}
+
+.practice-settings {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+    gap: 1rem;
+}
+
+.radio-btn {
+    display: flex;
+    align-items: center;
+    padding: 0.2rem;
+}
+
+
+.difficulty-range {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.footer {
+    text-align: center;
+}
+
+input[type="radio"] {
+    margin-right: 0.4rem;
+    -ms-transform: scale(1.1);
+        /* IE 9 */
+        -webkit-transform: scale(1.1);
+        /* Chrome, Safari, Opera */
+        transform: scale(1.1);
+        accent-color: #15e098;
+}
+
+input[type="checkbox"] {
+    margin-right: 0.4rem;
+    -ms-transform: scale(1.1);
+    /* IE 9 */
+    -webkit-transform: scale(1.1);
+    /* Chrome, Safari, Opera */
+    transform: scale(1.1);
+    accent-color: #15e098;
+}
+
+input[type="range"] {
+    margin-right: 0.4rem;
+    -ms-transform: scale(1.1);
+    /* IE 9 */
+    -webkit-transform: scale(1.1);
+    /* Chrome, Safari, Opera */
+    transform: scale(1.1);
+    accent-color: #15e098;
+}
+
+/* Example of pulse effect for correct answer */
+@keyframes pulseCorrect {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Example of shake effect for incorrect answer */
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-10px);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+
+    75% {
+        transform: translateX(-10px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
