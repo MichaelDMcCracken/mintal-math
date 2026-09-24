@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mintal Math • Fresh Mental Math Flashcards</title>
+  <meta name="description" content="A fresh, minty flashcard app for practicing mental math with smart adaptive learning that focuses on your weak spots." />
+  <meta name="theme-color" content="#10b981" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22><text y=%2226%22 font-size=%2226%22>🌿</text></svg>">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header (Main Brand & App Bar) -->
+    <header class="app-header">
+      <div class="logo-area">
+        <div class="logo-icon" aria-hidden="true">🌿</div>
+        <div class="brand-text">
+          <h1>Mintal <span>Math</span></h1>
+          <p>Mental arithmetic flashcards with adaptive learning</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <!-- Mint Leaves XP Badge -->
+        <div class="leaves-badge" id="leaves-badge" title="Mint Leaves XP (Click to view progress)">
+          🌿 <span id="leaves-count">0</span>
+          <span class="rank-name" id="rank-name">Seedling</span>
+        </div>
+        <button id="install-btn" class="icon-btn" style="display:none;" title="Install Mintal Math App" aria-label="Install App">
+          <span>📥</span>
+        </button>
+        <button id="sound-btn" class="icon-btn" title="Toggle Sound" aria-label="Toggle Sound">
+          <span id="sound-icon">🔊</span>
+        </button>
+        <button id="theme-btn" class="icon-btn" title="Toggle Dark/Light Theme" aria-label="Toggle Dark/Light Theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+        <button id="analytics-btn" class="icon-btn" title="Mastery & Leitner Boxes" aria-label="View Mastery Dashboard">
+          <span>📊</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- SCREEN 1: SESSION SETUP & HUB -->
+    <div id="setup-view" class="view-screen">
+      <!-- Quick Stats Bar -->
+      <section class="status-bar" aria-label="Current Performance Statistics">
+        <div class="stat-pill streak">
+          <span class="label">🔥 Streak</span>
+          <span id="stat-streak" class="value">0</span>
+        </div>
+        <div class="stat-pill accuracy">
+          <span class="label">🎯 Accuracy</span>
+          <span id="stat-accuracy" class="value">100%</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">⚡ Record Streak</span>
+          <span id="stat-best-streak" class="value">0</span>
+        </div>
+        <div class="stat-pill">
+          <span class="label">⏱️ Avg Speed</span>
+          <span id="stat-avg-time" class="value">--</span>
+        </div>
+      </section>
+
+      <!-- Daily Mint Highlight Card -->
+      <div class="daily-feature-card">
+        <div class="daily-feature-info">
+          <h3><span>📅</span> Daily Mint Challenge</h3>
+          <p id="setup-daily-status">15 fresh daily questions &bull; Earn +50 🌿 Mint Leaves</p>
+        </div>
+        <button type="button" id="start-daily-btn" class="btn-play-daily">Play Today's Mint</button>
+      </div>
+
+      <!-- Control Hub (Configure Session) -->
+      <section class="control-hub" aria-label="Session Configuration">
+        <div class="hub-top">
+          <!-- Modes -->
+          <div>
+            <div class="setup-section-title">Session Mode</div>
+            <div class="mode-selector" role="tablist">
+              <button class="mode-btn active" data-mode="practice" role="tab" aria-selected="true">Practice</button>
+              <button class="mode-btn" data-mode="daily" role="tab" aria-selected="false">📅 Daily Mint</button>
+              <button class="mode-btn" data-mode="speedrun" role="tab" aria-selected="false">60s Sprint</button>
+              <button class="mode-btn" data-mode="test20" role="tab" aria-selected="false">Target 20</button>
+            </div>
+          </div>
+
+          <!-- Smart Adaptive Toggle -->
+          <label class="adaptive-toggle-wrap" title="Automatically analyzes your errors and presents problems you struggle with more frequently">
+            <span class="toggle-switch">
+              <input type="checkbox" id="adaptive-toggle" checked />
+              <span class="slider-round"></span>
+            </span>
+            <span class="toggle-title">
+              Adaptive Learning <span class="badge-ai">Smart</span>
+            </span>
+          </label>
+        </div>
+
+        <!-- Controls Grid -->
+        <div class="controls-grid">
+          <!-- Operations Selection -->
+          <div class="control-group">
+            <label id="ops-label">Operations (Multi-Select)</label>
+            <div class="op-pills" role="group" aria-labelledby="ops-label">
+              <button class="op-pill active" data-op="+" title="Addition">+</button>
+              <button class="op-pill active" data-op="-" title="Subtraction">−</button>
+              <button class="op-pill active" data-op="*" title="Multiplication">×</button>
+              <button class="op-pill active" data-op="/" title="Division">÷</button>
+            </div>
+            <div class="op-subgroup-label">Specialist Modes:</div>
+            <div class="op-pills">
+              <button class="op-pill special-pill" data-op="%" title="Percentages & Tips">% Tips</button>
+              <button class="op-pill special-pill" data-op="pow" title="Squares & Roots">x² Roots</button>
+              <button class="op-pill special-pill" data-op="alg" title="Missing Operand (Algebra)">? Algebra</button>
+              <button class="op-pill special-pill" data-op="chain" title="Chain / 3-Step Math">⋯ Chain</button>
+            </div>
+          </div>
+
+          <!-- Difficulty Selection -->
+          <div class="control-group">
+            <label id="diff-label">Difficulty Level</label>
+            <div class="difficulty-tabs" role="group" aria-labelledby="diff-label">
+              <button class="diff-btn" data-diff="easy">Easy (0-10)</button>
+              <button class="diff-btn active" data-diff="medium">Med (0-15)</button>
+              <button class="diff-btn" data-diff="hard">Hard (0-25)</button>
+              <button class="diff-btn" data-diff="custom">Custom</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Custom Range Drawer -->
+        <div id="custom-range-box" class="custom-range-box">
+          <div class="slider-row">
+            <label for="custom-min">Min Operand:</label>
+            <input type="range" id="custom-min" min="0" max="25" value="0" />
+            <span id="custom-min-val" class="slider-val">0</span>
+          </div>
+          <div class="slider-row">
+            <label for="custom-max">Max Operand:</label>
+            <input type="range" id="custom-max" min="5" max="100" value="25" step="1" />
+            <span id="custom-max-val" class="slider-val">25</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- BIG START SESSION CTA -->
+      <button type="button" id="start-session-btn" class="start-session-btn">
+        <span>🚀 Start Practice Session</span>
+      </button>
+
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <button type="button" id="setup-weakspots-btn" class="btn-secondary" style="flex:1; min-width:140px; justify-content:center;">
+          🎯 Drill Weak Spots
+        </button>
+        <button type="button" id="setup-mastery-btn" class="btn-secondary" style="flex:1; min-width:140px; justify-content:center;">
+          📦 Leitner Boxes & Matrix
+        </button>
+      </div>
+    </div>
+
+    <!-- SCREEN 2: ACTIVE PRACTICE ARENA (CLEAN & DISTRACTION-FREE) -->
+    <div id="practice-view" class="view-screen" style="display: none;">
+      <!-- Practice Arena Top Bar -->
+      <nav class="practice-nav-bar">
+        <button type="button" id="exit-practice-btn" class="back-to-setup-btn" title="End session and return to settings">
+          ← End Session
+        </button>
+        <div class="session-info-badge" id="session-info-badge">
+          <span>🔥 Streak: <strong id="practice-streak">0</strong></span>
+          <span>&bull;</span>
+          <span id="practice-mode-tag">Practice</span>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.35rem;">
+          <button id="practice-pause-btn" class="icon-btn" title="Pause Timer (P)" aria-label="Pause Timer">
+            <span id="practice-pause-icon">⏸️</span>
+          </button>
+        </div>
+      </nav>
+
+      <!-- Speedrun Banner with Ghost Race Track -->
+      <div id="speedrun-banner" class="speedrun-timer-bar hidden">
+        <div class="speedrun-info">
+          <div style="display:flex; align-items:center; gap:0.6rem;">
+            <span id="speedrun-title">⏳ 60s Sprint</span>
+            <button type="button" id="speedrun-pause-btn" class="speedrun-pause-btn" title="Pause/Resume Sprint (P)">⏸️ Pause</button>
+          </div>
+          <span id="speedrun-val">60s</span>
+        </div>
+        <div class="ghost-race-track" id="ghost-track">
+          <div class="runner-row">
+            <span class="runner-label">🏃 You: <span id="user-runner-score">0</span></span>
+            <div class="track-bar">
+              <div class="track-fill user-fill" id="user-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+          <div class="runner-row">
+            <span class="runner-label">👻 Ghost: <span id="ghost-runner-score">0</span></span>
+            <div class="track-bar">
+              <div class="track-fill ghost-fill" id="ghost-fill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Adaptive Learning Focus Banner -->
+      <div id="adaptive-banner" class="adaptive-hint-banner">
+        <span>🌿 <strong>Adaptive Focus:</strong> <span id="adaptive-status-text">Smart mode active</span></span>
+        <button id="view-weakspots-btn" class="practice-weak-btn" style="background:none; border:none; text-decoration:underline; font-size:0.75rem; cursor:pointer;">Details</button>
+      </div>
+
+      <!-- FLASHCARD STAGE -->
+      <main class="flashcard-stage" id="flashcard-stage">
+        <!-- Pause Overlay -->
+        <div id="pause-overlay" class="pause-overlay" style="display: none;">
+          <div class="pause-content">
+            <div class="pause-icon-big">⏸️</div>
+            <h3>Timer Paused</h3>
+            <p>Practice is paused and the timer is frozen. Ready to jump back in?</p>
+            <button type="button" id="resume-btn" class="btn-primary" style="margin: 1rem auto 0;">▶️ Resume Practice (P)</button>
+          </div>
+        </div>
+
+        <div class="flashcard-card" id="flashcard" tabindex="0" role="button" aria-label="Flashcard. Press space or click to flip.">
+          <!-- Front of Card -->
+          <div class="flashcard-face card-front">
+            <div class="card-meta">
+              <div style="display:flex; align-items:center; gap:0.4rem;">
+                <span class="problem-category-badge" id="card-badge">Multiplication</span>
+                <span class="leitner-tag" id="leitner-badge">📦 Box 1</span>
+              </div>
+              <span class="flip-hint"><span>🔄</span> Click or Space to flip</span>
+            </div>
+
+            <div class="card-body">
+              <div class="math-problem" id="problem-text">
+                <span id="num1">7</span>
+                <span class="math-operator" id="op-symbol">×</span>
+                <span id="num2">8</span>
+                <span class="math-equals">=</span>
+                <span class="math-placeholder" id="placeholder-val">?</span>
+              </div>
+              <div class="timer-wrap">
+                <div class="problem-timer-indicator" id="timer-indicator">⏱️ 0.0s</div>
+                <button type="button" id="card-pause-btn" class="mini-pause-btn" title="Pause Timer (P)" aria-label="Pause Timer">⏸️</button>
+              </div>
+            </div>
+
+            <div class="card-feedback" id="card-feedback"></div>
+          </div>
+
+          <!-- Back of Card (Answer & Mental Tip) -->
+          <div class="flashcard-face card-back">
+            <div class="card-meta">
+              <span class="solution-title">Solution & Strategy</span>
+              <span class="flip-hint"><span>🔄</span> Click to flip back</span>
+            </div>
+
+            <div class="card-body">
+              <div class="solution-answer" id="solution-answer">56</div>
+              <div class="solution-tip" id="solution-tip">
+                <strong>Mental Tip:</strong> For 7 × 8, think 5, 6, 7, 8 &rarr; 56 = 7 × 8!
+              </div>
+            </div>
+
+            <div class="card-feedback">Press Enter or click Next for next problem</div>
+          </div>
+        </div>
+      </main>
+
+      <!-- ACTION / INPUT AREA -->
+      <section class="action-section">
+        <form id="answer-form" class="input-container" autocomplete="off" onsubmit="return false;">
+          <input 
+            type="number" 
+            id="answer-input" 
+            class="answer-input" 
+            placeholder="Type answer..." 
+            inputmode="numeric" 
+            pattern="[0-9\-]*"
+            autocomplete="off"
+          />
+          <button type="submit" id="submit-btn" class="btn-primary">
+            <span>Submit</span> ↵
+          </button>
+          <button type="button" id="flip-btn" class="btn-secondary" title="Flip card or reveal answer">
+            <span>Reveal</span> 🔄
+          </button>
+          <button type="button" id="skip-btn" class="btn-secondary" title="Skip to next card">
+            <span>Skip</span> &rarr;
+          </button>
+        </form>
+
+        <div class="secondary-actions">
+          <span class="shortcuts-legend">
+            Hotkeys: <kbd>Enter</kbd> submit &bull; <kbd>Space</kbd> flip &bull; <kbd>P</kbd> pause &bull; <kbd>Esc</kbd> clear
+          </span>
+          <button type="button" id="numpad-toggle" class="numpad-toggle-btn">Toggle Touch Numpad</button>
+        </div>
+
+        <!-- Touch Numpad for mobile / tablets -->
+        <div id="numpad" class="numpad-container">
+          <button type="button" class="numpad-btn" data-key="1">1</button>
+          <button type="button" class="numpad-btn" data-key="2">2</button>
+          <button type="button" class="numpad-btn" data-key="3">3</button>
+          <button type="button" class="numpad-btn" data-key="4">4</button>
+          <button type="button" class="numpad-btn" data-key="5">5</button>
+          <button type="button" class="numpad-btn" data-key="6">6</button>
+          <button type="button" class="numpad-btn" data-key="7">7</button>
+          <button type="button" class="numpad-btn" data-key="8">8</button>
+          <button type="button" class="numpad-btn" data-key="9">9</button>
+          <button type="button" class="numpad-btn action-btn" data-key="clear">Clear</button>
+          <button type="button" class="numpad-btn" data-key="0">0</button>
+          <button type="button" class="numpad-btn action-btn" data-key="backspace">⌫</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- ANALYTICS & MASTERY MODAL -->
+    <div id="analytics-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 id="modal-title" class="modal-title"><span>📊</span> Mastery & Leitner Spaced Repetition</h2>
+          <button id="close-modal-btn" class="close-btn" aria-label="Close dialog">&times;</button>
+        </div>
+
+        <!-- Daily Mint Streak Banner -->
+        <div style="display:flex; justify-content:space-between; align-items:center; background:var(--bg-subtle); padding:0.75rem 1rem; border-radius:var(--radius-md);">
+          <div>
+            <div style="font-weight:700; font-size:0.9rem;">📅 Daily Mint Habit</div>
+            <div style="font-size:0.75rem; color:var(--text-muted);" id="daily-mint-status">Not completed today yet!</div>
+          </div>
+          <span class="daily-streak-badge" id="daily-streak-display">🔥 0 Day Streak</span>
+        </div>
+
+        <div class="analytics-grid">
+          <div class="analytics-card">
+            <div id="m-total-solved" class="num">0</div>
+            <div class="txt">Total Solved</div>
+          </div>
+          <div class="analytics-card">
+            <div id="m-overall-accuracy" class="num">0%</div>
+            <div class="txt">Overall Accuracy</div>
+          </div>
+          <div class="analytics-card">
+            <div id="m-best-streak" class="num">0</div>
+            <div class="txt">Record Streak</div>
+          </div>
+        </div>
+
+        <!-- Leitner Box 5-Shelf Display -->
+        <div>
+          <div class="section-subtitle">
+            <span>📦 Leitner Spaced Repetition Boxes</span>
+            <span style="font-size:0.7rem; color:var(--text-muted);">Advance on correct, resets to Box 1 on error</span>
+          </div>
+          <div class="leitner-shelf" id="leitner-shelf">
+            <!-- Box 1 to 5 dynamically populated -->
+          </div>
+        </div>
+
+        <!-- Weak Spots Section -->
+        <div>
+          <div class="section-subtitle">
+            <span>🎯 Areas Needing Practice (Lowest Accuracy)</span>
+            <button id="drill-weakspots-btn" class="practice-weak-btn">Drill Weak Spots</button>
+          </div>
+          <div id="weakness-list" class="weakness-list">
+            <div style="font-size:0.85rem; color:var(--text-muted); padding: 0.5rem 0;">No weak spots recorded yet! Keep practicing to calibrate.</div>
+          </div>
+        </div>
+
+        <!-- Strong Spots Section -->
+        <div>
+          <div class="section-subtitle">
+            <span>🌟 Mastered Facts (Highest Accuracy)</span>
+          </div>
+          <div id="strength-list" class="weakness-list">
+            <div style="font-size:0.85rem; color:var(--text-muted); padding: 0.5rem 0;">Keep practicing to establish mastery badges.</div>
+          </div>
+        </div>
+
+        <!-- Times Table Heatmap Matrix -->
+        <div>
+          <div class="section-subtitle">
+            <span>✖️ Multiplication 12×12 Mastery Matrix</span>
+            <span style="font-size:0.7rem; color:var(--text-muted);">Green = Mastered, Red = Struggling</span>
+          </div>
+          <div class="heatmap-container">
+            <div id="heatmap-grid" class="heatmap-grid"></div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border-light); padding-top:0.75rem;">
+          <button id="reset-stats-btn" class="btn-secondary" style="color:var(--accent-wrong); border-color:#fca5a5;">
+            Reset Stored Data
+          </button>
+          <button id="close-modal-bottom-btn" class="btn-primary">Done</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
