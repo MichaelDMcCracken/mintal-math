@@ -1887,7 +1887,7 @@
 
     // Numpad Toggle & Clicks
     elements.numpadToggle.addEventListener('click', () => {
-      const isVisible = elements.numpad.style.display === 'grid';
+      const isVisible = getComputedStyle(elements.numpad).display === 'grid';
       elements.numpad.style.display = isVisible ? 'none' : 'grid';
       elements.numpadToggle.textContent = isVisible ? 'Show Touch Numpad' : 'Hide Touch Numpad';
     });

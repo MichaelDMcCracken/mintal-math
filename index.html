@@ -277,10 +277,12 @@
             type="number" 
             id="answer-input" 
             class="answer-input" 
-            placeholder="Type answer..." 
-            inputmode="numeric" 
+            placeholder="Use the keypad..." 
+            inputmode="none"
+            readonly
             pattern="[0-9\-]*"
             autocomplete="off"
+            aria-label="Answer. Use the on-screen keypad."
           />
           <button type="submit" id="submit-btn" class="btn-primary">
             <span>Submit</span> ↵
